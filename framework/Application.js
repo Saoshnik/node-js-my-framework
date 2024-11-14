@@ -45,9 +45,9 @@ module.exports = class Application {
         }
 
         // version 2
-        res.sendBetter = AnotherModule.send;
-        res.fillSomethingBetter = AnotherModule.fillSomething;
-        res.checkAuthBetter = AnotherModule.checkAuth;
+        // res.sendBetter = AnotherModule.send;
+        // res.fillSomethingBetter = AnotherModule.fillSomething;
+        // res.checkAuthBetter = AnotherModule.checkAuth;
     }
 
 
@@ -72,6 +72,11 @@ module.exports = class Application {
         return http.createServer((req, res) => {
             res.writeHead(200, {'Content-Type': 'application/json'});
 
+            // ... Конечно же можно модифицировать прототип, а потом вернуть все к оригиналу, но я не знаю
+            // что лучше и хочу попробовать использовать будущие middleware
+            http.ServerResponse.prototype.sendHello = () => res.end('Hello');
+            res.sendHello();
+            // вернуть к обычному состоянию http.ServerResponse.prototype...
 
             // Этот коммит с комментариями я залью для понимая следующего коммита
             // Тут будет мой код с тем как я пытался разобраться
