@@ -1,17 +1,12 @@
 'use strict';
 
 const Router = require('../../framework/Router');
+const userRouter = require('./userRouter');
+const postRouter = require('./postRouter');
 
 const router = new Router();
 
-router.get('/users', (req, res) => {
-    console.log(req?.body);
-    return res.end(JSON.stringify({id: 1, likes: 20}));
-});
-
-router.get('/posts', (req, res) => {
-    console.log(req?.body);
-    return res.end(JSON.stringify({id: 1, name: 'Ivan'}));
-})
+router.use(userRouter);
+router.use(postRouter);
 
 module.exports = router;

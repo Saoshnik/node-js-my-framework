@@ -22,8 +22,8 @@ class Router {
             Object.keys(endpoint).forEach((method) => {
                 const handler = endpoint[method];
                 this.request(path, method, handler);
-            })
-        })
+            });
+        });
     }
 
     request(path, method, handler) {
