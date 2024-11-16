@@ -6,7 +6,7 @@ const router = new Router();
 
 router.get('/users', (req, res) => {
     console.log(req?.body);
-    return res.end(JSON.stringify({id: 1, likes: 20}));
+    return res.send({id: 1, likes: 20});
 });
 
 module.exports = router;
