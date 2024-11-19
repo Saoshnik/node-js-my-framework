@@ -10,18 +10,11 @@ router.get('/users', (req, res) => {
 });
 
 router.post('/users', (req, res) => {
-    let data = '';
-    req.on('data', (chunk) => {
-        data += chunk;
-    });
-    req.on('end', () => {
-        data = JSON.parse(data);
-        req.body = data;
+    console.log(`req.body in router: `);
+    console.log(req.body);
 
-        req.body.age = req.body.age ?? 18;
-
-        res.send(req.body);
-    });
+    req.body.age = req.body.age ?? 18;
+    res.send(req.body);
 });
 
 module.exports = router;

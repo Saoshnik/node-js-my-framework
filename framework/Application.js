@@ -13,6 +13,8 @@ module.exports = class Application {
     }
 
     addRouter(router) {
+        console.log(router.endpoints);
+
         Object.keys(router.endpoints).forEach((path) => {
             const endpoint = router.endpoints[path];
             Object.keys(endpoint).forEach((method) => {
@@ -32,8 +34,14 @@ module.exports = class Application {
         return `[${path}]:[${method}]`;
     }
 
+    async _executeMiddlewares(req, res) {
+        for (const middleware of this.middlewares) {
+            await middleware(req, res);
+        }
+    }
+
     _createServer() {
-        return http.createServer((req, res) => {
+        return http.createServer(async (req, res) => {
             /* Будущие middleware не работают как middleware в express - они не принимают next,
             а принимают только (req, res), а не (req, res, next)
             Middlewares будут запускаться в порядке, в котором были добавлены в массив
@@ -41,9 +49,7 @@ module.exports = class Application {
             Каждая middleware будет добавлять функционал, делать что-то с req и res и т.д., при каждом подключении прямо здесь,
             поскольку req и res уникальны для каждого подключения
             */
-            this.middlewares.forEach(middleware => {
-                middleware(req, res);
-            });
+            await this._executeMiddlewares(req, res);
 
             const emitted = this.server.emit(this._getRouteMask(req.url, req.method), req, res);
             if (!emitted) {

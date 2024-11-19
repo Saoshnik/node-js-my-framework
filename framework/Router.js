@@ -29,7 +29,6 @@ class Router {
     request(path, method, handler) {
         if (!this.endpoints[path]) {
             this.endpoints[path] = {};
-            console.log('Добавлен новый путь для роутера');
         }
 
         if (this.endpoints[path][method]) {
@@ -41,8 +40,6 @@ class Router {
         }
 
         this.endpoints[path][method] = handler;
-
-        console.log(this.endpoints);
     }
 
     get(path, handler) {
