@@ -8,7 +8,9 @@ module.exports = async function (req, res) {
                 data += chunk;
             });
             req.on('end', () => {
-                req.body = JSON.parse(data);
+                if (data) {
+                    req.body = JSON.parse(data);
+                }
                 resolve();
             });
         } catch (err) {

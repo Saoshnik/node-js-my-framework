@@ -51,7 +51,7 @@ module.exports = class Application {
             */
             await this._executeMiddlewares(req, res);
 
-            const emitted = this.server.emit(this._getRouteMask(req.url, req.method), req, res);
+            const emitted = this.server.emit(this._getRouteMask(req.pathname, req.method), req, res);
             if (!emitted) {
                 res.send(req.url);
             }
