@@ -3,7 +3,7 @@
 const Application = require('./framework/Application');
 const router = require('./src/routes/index');
 const jsonStringify = require('./framework/middlewares/jsonStringify');
-const parseRequest = require('./framework/middlewares/parseRequest');
+const parseRequest = require('./framework/middlewares/parseRequestBody');
 const parseRequestParams = require('./framework/middlewares/parseRequestParams');
 require('dotenv').config();
 
