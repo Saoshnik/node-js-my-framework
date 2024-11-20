@@ -1,32 +1,30 @@
 'use strict';
 
 const Router = require('../../framework/Router');
+const models = require('../models/models');
 
 const router = new Router();
 
-router.get('/users', (req, res) => {
-    console.log(req?.params);
-
+router.get('/users', async (req, res) => {
     if (req.params.id) {
-        // достаем из бд
-        const user = {id: 1, name: 'Ivan'};
+        const user = await models.User.findById(req.params.id);
         return res.send(user);
     }
 
-    const users = [
-        {id: 1, name: 'Ivan'},
-        {id: 2, name: 'Michail'},
-        {id: 3, name: 'Sandy'},
-    ];
+    const users = await models.User.find();
     res.send(users);
 });
 
-router.post('/users', (req, res) => {
-    console.log(`req.body in router: `);
-    console.log(req.body);
-
+router.post('/users', async (req, res) => {
     req.body.age = req.body.age ?? 18;
-    res.send(req.body);
+
+    const user = new models.User({
+        name: req.body.name,
+        age: req.body.age
+    });
+    await user.save();
+
+    res.send(user);
 });
 
 module.exports = router;
