@@ -1,6 +1,7 @@
 'use strict';
 
 const User = require('../models/userModel');
+const {Types} = require("mongoose");
 
 class UserController {
     async create(req, res) {
@@ -16,7 +17,7 @@ class UserController {
     }
 
     async get(req, res) {
-        if (req.params.id) {
+        if (req.params.id && Types.ObjectId.isValid(req.params.id)) {
             const user = await User.findById(req.params.id);
             return res.send(user);
         }

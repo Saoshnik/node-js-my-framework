@@ -1,6 +1,7 @@
 'use strict';
 
 const Post = require('../models/postModel');
+const {Types} = require("mongoose");
 
 class PostController {
     async create(req, res) {
@@ -13,7 +14,7 @@ class PostController {
     }
 
     async getAll(req, res) {
-        if (req.params.id) {
+        if (req.params.id && Types.ObjectId.isValid(req.params.id)) {
             const post = await Post.findById(req.params.id);
             res.send(post);
             return;
@@ -22,11 +23,6 @@ class PostController {
         const posts = await Post.find();
         res.send(posts);
     }
-
-    async getOne(req, res) {
-
-    }
-
 
     async update() {
 
