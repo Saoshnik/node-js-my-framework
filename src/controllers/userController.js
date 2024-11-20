@@ -1,12 +1,12 @@
 'use strict';
 
-const models = require("../models/models");
+const User = require('../models/userModel');
 
 class UserController {
     async create(req, res) {
         req.body.age = req.body.age ?? 18;
 
-        const user = new models.User({
+        const user = new User({
             name: req.body.name,
             age: req.body.age
         });
@@ -17,11 +17,11 @@ class UserController {
 
     async get(req, res) {
         if (req.params.id) {
-            const user = await models.User.findById(req.params.id);
+            const user = await User.findById(req.params.id);
             return res.send(user);
         }
 
-        const users = await models.User.find();
+        const users = await User.find();
         res.send(users);
     }
 }
