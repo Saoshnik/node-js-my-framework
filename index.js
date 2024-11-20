@@ -3,8 +3,8 @@
 const mongoose = require('mongoose');
 const Application = require('./framework/Application');
 const router = require('./src/routes/index');
-const jsonStringify = require('./framework/middlewares/jsonStringify');
-const parseRequest = require('./framework/middlewares/parseRequestBody');
+const jsonResponseStringify = require('./framework/middlewares/jsonResponseStringify');
+const parseRequestBody = require('./framework/middlewares/parseRequestBody');
 const parseRequestParams = require('./framework/middlewares/parseRequestParams');
 require('dotenv').config();
 
@@ -12,8 +12,8 @@ const app = new Application();
 
 app.addRouter(router);
 
-app.useMiddleware(jsonStringify);
-app.useMiddleware(parseRequest);
+app.useMiddleware(jsonResponseStringify);
+app.useMiddleware(parseRequestBody);
 
 const PORT = process.env.PORT;
 const HOSTNAME = process.env.HOSTNAME;
