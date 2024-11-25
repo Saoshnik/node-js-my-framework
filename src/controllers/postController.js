@@ -5,9 +5,9 @@ const {Types} = require("mongoose");
 
 class PostController {
     async create(req, res) {
-        const {title, body, likes} = req.body;
+        const {title, body, likes, user} = req.body;
 
-        const post = new Post({title, body, likes});
+        const post = new Post({title, body, likes, userId: user._id});
         await post.save();
 
         res.send(post);

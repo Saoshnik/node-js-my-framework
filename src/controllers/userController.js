@@ -5,12 +5,9 @@ const {Types} = require("mongoose");
 
 class UserController {
     async create(req, res) {
-        req.body.age = req.body.age ?? 18;
+        const {name, email, password, age} = req.body;
 
-        const user = new User({
-            name: req.body.name,
-            age: req.body.age
-        });
+        const user = new User({name, email, password, age});
         await user.save();
 
         res.send(user);
