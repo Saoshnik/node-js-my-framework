@@ -1,7 +1,7 @@
 'use strict';
 
 const User = require('../models/userModel');
-const {Types} = require("mongoose");
+const {Types} = require('mongoose');
 
 class UserController {
     async create(req, res) {
