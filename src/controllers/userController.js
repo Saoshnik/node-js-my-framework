@@ -1,10 +1,11 @@
 'use strict';
 
 const User = require('../models/userModel');
+const Role = require('../models/roleModel');
 const {Types} = require('mongoose');
 
 class UserController {
-    async create(req, res) {
+    async registration(req, res) {
         try {
             const {name, email, password, age} = req.body;
 
@@ -17,7 +18,15 @@ class UserController {
         }
     }
 
-    async get(req, res) {
+    async login(req, res) {
+        try {
+            res.send('works');
+        } catch (err) {
+            res.send(err.message);
+        }
+    }
+
+    async getAll(req, res) {
         try {
             if (req.params.id && Types.ObjectId.isValid(req.params.id)) {
                 const user = await User.findById(req.params.id);

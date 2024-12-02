@@ -30,7 +30,11 @@ const userSchema = new mongoose.Schema({
         min: 0,
         max: 120
     },
-    posts: [mongoose.SchemaTypes.ObjectId]
+    posts: [mongoose.SchemaTypes.ObjectId],
+    roles: [{
+        type: String,
+        ref: 'Role'
+    }]
 });
 
 const User = mongoose.model('User', userSchema);
