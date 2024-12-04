@@ -18,9 +18,11 @@ module.exports = class Application {
         Object.keys(router.endpoints).forEach((path) => {
             const endpoint = router.endpoints[path];
             Object.keys(endpoint).forEach((method) => {
-                const handler = endpoint[method];
+                const handlers = endpoint[method];
                 this.server.on(this._getRouteMask(path, method), (req, res) => {
-                    handler(req, res);
+                    for (const handler of handlers) {
+                        handler(req, res);
+                    }
                 });
             });
         });
