@@ -20,13 +20,34 @@ module.exports = class Application {
             Object.keys(endpoint).forEach((method) => {
                 const handlers = endpoint[method];
                 this.server.on(this._getRouteMask(path, method), (req, res) => {
-                    for (const handler of handlers) {
-                        handler(req, res);
+                    for (let i = 0; i < handlers.length; i++) {
+                        const handler = handlers[i];
+                        // либо норм
+                        const next = handlers[i + 1];
+                        handler(req, res, next);
+
+                        // либо if i - 1
                     }
+                    // либо i - 1
+                    // handlers[handlers.length - 1](req, res);
+
+                    // вызываем только первый обработчик, остальные будут вызываться при помощи next()
+                    // handlers(req, res);
                 });
             });
         });
     }
+
+    /* endpoints = {
+    '/users': {
+        'GET': [middleware1, middleware2, handler],
+        'POST': [middleware1, handler2],
+        'DELETE': [middleware3, middleware4, handler3]
+    },
+    '/posts': {
+        'GET': [handler4]
+    }
+}*/
 
     listen(PORT, HOSTNAME, callback) {
         this.server.listen(PORT, HOSTNAME, callback);

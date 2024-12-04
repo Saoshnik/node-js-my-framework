@@ -24,14 +24,12 @@ class Router {
             const endpoint = router.endpoints[path];
             Object.keys(endpoint).forEach((method) => {
                 const handlers = endpoint[method];
-                for (const handler of handlers) {
-                    this.request(path, method, handler);
-                }
+                this._request(path, method, ...handlers);
             });
         });
     }
 
-    request(path, method, handlers) {
+    _request(path, method, ...handlers) {
         if (!this.endpoints[path]) {
             this.endpoints[path] = {};
         }
@@ -39,32 +37,54 @@ class Router {
             this.endpoints[path][method] = [];
         }
 
-        // закомментировано для возможности добавлять больше одного обработчика - то есть что-то вроде middleware
-        // if (this.endpoints[path][method]) {
-        //     throw new Error(`Метод ${method} по адресу ${path} уже существует`);
-        // }
-
-        if (typeof handler !== 'function') {
-            throw new TypeError(`Аргумент handler не является function`);
+        // todo: подкорректировать
+        if (this.endpoints[path][method].length > 0) {
+            throw new Error(`Метод ${method} по адресу ${path} уже существует`);
         }
 
-        this.endpoints[path][method].push(handler);
+        console.log(handlers);
+        for (const handler of handlers) {
+            if (typeof handler !== 'function') {
+                throw new TypeError(`Обработчик ${handler} не является function`);
+            }
+
+            this.endpoints[path][method].push(handler);
+        }
+
+
+        /*         if (typeof handlers[0] !== 'function') {
+            throw new TypeError(`Обработчик ${handlers[0]} не является function`);
+        }
+
+        // устанавливаем только первый из обработчиков, чтобы остальные вызывались только при помощи next()
+        this.endpoints[path][method].push(handlers[0]);
+
+        for (let i = 0; i < handlers.length - 1; i++) {
+            const handler = handlers[i];
+
+            if (typeof handler !== 'function') {
+                throw new TypeError(`Обработчик ${handler} не является function`);
+            }
+
+            console.log(handlers[i + 1]);
+            handler.next = handlers[i + 1];
+        }*/
     }
 
-    get(path, handler) {
-        this.request(path, 'GET', handler);
+    get(path, ...handlers) {
+        this._request(path, 'GET', ...handlers);
     }
 
-    post(path, handler) {
-        this.request(path, 'POST', handler);
+    post(path, ...handlers) {
+        this._request(path, 'POST', ...handlers);
     }
 
-    put(path, handler) {
-        this.request(path, 'PUT', handler);
+    put(path, ...handlers) {
+        this._request(path, 'PUT', ...handlers);
     }
 
-    delete(path, handler) {
-        this.request(path, 'DELETE', handler);
+    delete(path, ...handlers) {
+        this._request(path, 'DELETE', ...handlers);
     }
 }
 
