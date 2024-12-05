@@ -10,7 +10,8 @@ const router = new Router();
 router.post('/registration', userController.registration);
 router.post('/login', userController.login);
 
-// мои middlewares не работают вместе, во время ошибки они не прерываются. Как реализовать middleware как в express я не знаю
+// мои middlewares не работают вместе, во время ошибки они не прерываются и каждая отправляет res.send(), что делать как раз нельзя
+// Как реализовать middleware как в express я не знаю
 router.get('/users', authMiddleware, roleMiddleware(['ADMIN']), userController.getAll);
 
 module.exports = router;
