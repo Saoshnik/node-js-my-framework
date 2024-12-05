@@ -37,12 +37,10 @@ class Router {
             this.endpoints[path][method] = [];
         }
 
-        // todo: подкорректировать
         if (this.endpoints[path][method].length > 0) {
             throw new Error(`Метод ${method} по адресу ${path} уже существует`);
         }
 
-        console.log(handlers);
         for (const handler of handlers) {
             if (typeof handler !== 'function') {
                 throw new TypeError(`Обработчик ${handler} не является function`);

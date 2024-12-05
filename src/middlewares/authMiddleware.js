@@ -3,9 +3,8 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = function (req, res, next) {
-    console.log('start');
     if (req.method === 'OPTIONS') {
-        next(); // todo with express: uncommit
+        /*next();*/ // todo with express: uncommit
         return; // todo with express: delete that line
     }
 
@@ -16,16 +15,12 @@ module.exports = function (req, res, next) {
         }
 
         req.user = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        next(); // todo with express: uncommit
+        /*next();*/ // todo with express: uncommit
     } catch (err) {
         if (res.statusCode === 200) {
             res.statusCode = 403;
         }
 
-        if (err instanceof jwt.JsonWebTokenError) {
-            req.send(err.message);
-        } else {
-            res.send('Пользователь не авторизован');
-        }
+        res.send(err.message);
     }
 };

@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
     posts: [mongoose.SchemaTypes.ObjectId],
     roles: [{
         type: String,
-        ref: 'Role',
+        ref: 'Role', // todo: разобраться с ref
         required: true
     }]
 });

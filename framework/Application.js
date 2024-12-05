@@ -22,12 +22,15 @@ module.exports = class Application {
                 this.server.on(this._getRouteMask(path, method), (req, res) => {
                     for (let i = 0; i < handlers.length; i++) {
                         const handler = handlers[i];
-                        // либо норм
+
+                        if (i === handlers.length - 1) {
+                            handler(req, res);
+                            continue;
+                        }
+
                         const next = handlers[i + 1];
                         handler(req, res, next);
                     }
-                    // либо до handlers.length - 1
-                    // handlers[handlers.length - 1](req, res);
 
                     // вызываем только первый обработчик, остальные будут вызываться при помощи next()
                     // handlers(req, res);
