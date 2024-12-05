@@ -6,7 +6,7 @@ const postRouter = require('./postRouter');
 
 const router = new Router();
 
-router.use(userRouter);
-router.use(postRouter);
+router.useRouter(userRouter);
+router.useRouter(postRouter);
 
 module.exports = router;

@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true,
         minLength: 8,
-        maxLength: 100
+        maxLength: 72 // - максимум, bcrypt проигнорирует последующие символы
     },
     name: {
         type: String,
@@ -33,10 +33,9 @@ const userSchema = new mongoose.Schema({
     posts: [mongoose.SchemaTypes.ObjectId],
     roles: [{
         type: String,
-        ref: 'Role'
+        ref: 'Role',
+        required: true
     }]
 });
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+module.exports = mongoose.model('User', userSchema);

@@ -25,10 +25,8 @@ module.exports = class Application {
                         // либо норм
                         const next = handlers[i + 1];
                         handler(req, res, next);
-
-                        // либо if i - 1
                     }
-                    // либо i - 1
+                    // либо до handlers.length - 1
                     // handlers[handlers.length - 1](req, res);
 
                     // вызываем только первый обработчик, остальные будут вызываться при помощи next()
@@ -37,17 +35,6 @@ module.exports = class Application {
             });
         });
     }
-
-    /* endpoints = {
-    '/users': {
-        'GET': [middleware1, middleware2, handler],
-        'POST': [middleware1, handler2],
-        'DELETE': [middleware3, middleware4, handler3]
-    },
-    '/posts': {
-        'GET': [handler4]
-    }
-}*/
 
     listen(PORT, HOSTNAME, callback) {
         this.server.listen(PORT, HOSTNAME, callback);

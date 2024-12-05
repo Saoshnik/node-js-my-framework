@@ -3,9 +3,7 @@
 const mongoose = require('mongoose');
 
 const roleSchema = new mongoose.Schema({
-    value: {type: String, unique: true, default: 'USER'} // todo: добавить enum
+    value: {type: String, unique: true, default: 'USER', trim: true} // todo: добавить enum
 });
 
-const Role = mongoose.model('Role', roleSchema);
-
-module.exports = Role;
+module.exports = mongoose.model('Role', roleSchema);
